@@ -1,1 +1,4 @@
 node_modules
+output.log
+nohup.out
+credentials.yml
