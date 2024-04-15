@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  app:
+    build: .
+    #image: node:21-alpine3.18
+    container_name: my-nodejs-container
+    ports:
+      - "3000:3000"
