@@ -39,6 +39,63 @@ app.post('/error',(req,res)=> {
   }
 });
 
+app.post('/news',(req,res)=> {
+  const { link } = req.body;
+  const axios = require('axios');
+  const cheerio = require('cheerio');
+  
+  // 웹 페이지 다운로드 및 HTML 파싱
+  axios.get(link)
+    .then(response => {
+      // 다운로드한 HTML을 cheerio로 로드하여 DOM으로 변환
+      const $ = cheerio.load(response.data);
+      
+      // 기사 본문 추출
+      const titleText = $('h2#title_area').text().trim();
+      const bodyText = $('div#newsct_article').text().trim();
+
+      if (bodyText.length == 0) {
+        // console.log("bodyText is empty");
+        res.send(null);
+        return Promise.reject('Response data is null.'); // catch로 이동
+      }
+      else {
+        console.log(titleText);
+        // res.send("body length:"+bodyText.length+"\n\n\n"+titleText+"\n\n\n"+bodyText);
+        return axios({
+          method: 'post',
+          url: 'https://naveropenapi.apigw.ntruss.com/text-summary/v1/summarize',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-NCP-APIGW-API-KEY-ID': 'dqujbk1ved',
+            'X-NCP-APIGW-API-KEY': 'A6U0GX3lGecOBEmHfAkqx2FQig5XS03jjMqFzGGa'
+          },
+          data: {
+            "document": {
+              "title": titleText,
+              "content": bodyText
+            },
+            "option": {
+              "language": "ko",
+              "model": "news",
+              "tone": 2,
+              "summaryCount": 3
+            }
+          },
+        });
+      }
+    })
+    .then(response => {
+      console.log("news summary sent successfully");
+      res.send(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+});
+
+
+
 app.get('/sound/:name',(req,res)=> {
   const { name } = req.params;
   if (name == 'dog') {
