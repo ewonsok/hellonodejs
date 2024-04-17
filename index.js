@@ -45,6 +45,10 @@ app.get('/sound/:name',(req,res)=> {
     res.json({'sound':'멍멍'})
   } else if (name == 'cat') {
     res.json({'sound':'야옹'})
+  } else if (name == '민지 블로그') {
+    res.json({'sound':'m.blog.naver.com/minji894'})
+  }  else if (name == '민지 인스타') {
+    res.json({'sound':'www.instagram.com/iamminjikoo'})
   } else
   { res.json({'sound':'몰라'}) }
   
