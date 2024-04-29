@@ -1,4 +1,4 @@
-const { transporter, createMailOptions } = require('./api/mailsend');
+const { transporter, createMailOptions } = require('./mailsend');
 function homepage(req, res) {
     res.send('Hello, World!');
 }
