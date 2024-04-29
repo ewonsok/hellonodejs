@@ -4,7 +4,7 @@ const yaml = require('js-yaml');
 
 // credentials.yml 파일을 읽어옵니다.
 try {
-    const fileContents = fs.readFileSync('credentials.yml', 'utf8');
+    const fileContents = fs.readFileSync('./config/credentials.yml', 'utf8');
     const credentials = yaml.load(fileContents);
 
     // transporter 생성
