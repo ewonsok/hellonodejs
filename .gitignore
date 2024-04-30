@@ -2,3 +2,5 @@ node_modules
 output.log
 nohup.out
 credentials.yml
+*.mp4
+*.mp3
